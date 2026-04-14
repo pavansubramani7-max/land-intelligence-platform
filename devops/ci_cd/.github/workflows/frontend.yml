@@ -1,0 +1,69 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths: ["frontend/**"]
+  pull_request:
+    branches: [main]
+    paths: ["frontend/**"]
+
+env:
+  ECR_REGISTRY: ${{ secrets.AWS_ECR_REGISTRY }}
+  IMAGE_NAME: land-intelligence-frontend
+
+jobs:
+  test-and-build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test -- --watchAll=false --passWithNoTests
+
+      - name: Build
+        run: npm run build
+        env:
+          REACT_APP_API_URL: ${{ secrets.PROD_API_URL }}
+
+      - name: Configure AWS credentials
+        if: github.ref == 'refs/heads/main'
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to ECR
+        if: github.ref == 'refs/heads/main'
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build and push Docker image
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker build -f ../devops/docker/Dockerfile.frontend -t $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }} .
+          docker push $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }}
+          docker tag $ECR_REGISTRY/$IMAGE_NAME:${{ github.sha }} $ECR_REGISTRY/$IMAGE_NAME:latest
+          docker push $ECR_REGISTRY/$IMAGE_NAME:latest
+
+      - name: Deploy to ECS
+        if: github.ref == 'refs/heads/main'
+        run: |
+          aws ecs update-service \
+            --cluster land-intelligence \
+            --service frontend-service \
+            --force-new-deployment \
+            --region ${{ secrets.AWS_REGION }}

@@ -1,0 +1,11 @@
+{
+  "classes": [
+    "high",
+    "low",
+    "medium"
+  ],
+  "name": "dispute_label_encoder",
+  "version": "20260414_142510",
+  "filename": "dispute_label_encoder_v20260414_142510.joblib",
+  "saved_at": "20260414_142510"
+}

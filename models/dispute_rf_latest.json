@@ -1,0 +1,19 @@
+{
+  "features": [
+    "ownership_change_count",
+    "litigation_count",
+    "survey_conflict",
+    "area_mismatch",
+    "document_inconsistency_count",
+    "price_volatility"
+  ],
+  "classes": [
+    "high",
+    "low",
+    "medium"
+  ],
+  "name": "dispute_rf",
+  "version": "20260414_142510",
+  "filename": "dispute_rf_v20260414_142510.joblib",
+  "saved_at": "20260414_142510"
+}

@@ -1,0 +1,12 @@
+{
+  "features": [
+    "price_change_pct",
+    "days_between_transfers",
+    "ownership_count_90days",
+    "price_vs_market_ratio"
+  ],
+  "name": "fraud_scaler",
+  "version": "20260414_142511",
+  "filename": "fraud_scaler_v20260414_142511.joblib",
+  "saved_at": "20260414_142511"
+}

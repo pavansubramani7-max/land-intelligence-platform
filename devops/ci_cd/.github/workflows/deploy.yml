@@ -1,0 +1,57 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["Backend CI", "Frontend CI"]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deployment environment"
+        required: true
+        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  deploy-aws-ecs:
+    name: Deploy to AWS ECS
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    environment: ${{ github.event.inputs.environment || 'staging' }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+      - name: Deploy backend to ECS
+        run: |
+          aws ecs update-service \
+            --cluster land-intelligence-cluster \
+            --service land-backend-service \
+            --force-new-deployment \
+            --region us-east-1
+      - name: Deploy frontend to ECS
+        run: |
+          aws ecs update-service \
+            --cluster land-intelligence-cluster \
+            --service land-frontend-service \
+            --force-new-deployment \
+            --region us-east-1
+      - name: Wait for deployment
+        run: |
+          aws ecs wait services-stable \
+            --cluster land-intelligence-cluster \
+            --services land-backend-service land-frontend-service \
+            --region us-east-1
+      - name: Notify deployment success
+        run: echo "Deployment to ${{ github.event.inputs.environment || 'staging' }} completed successfully"

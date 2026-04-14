@@ -1,0 +1,37 @@
+{
+  "title": "Land Intelligence Platform",
+  "uid": "land-intelligence",
+  "version": 1,
+  "panels": [
+    {
+      "id": 1,
+      "title": "API Request Rate",
+      "type": "graph",
+      "targets": [{ "expr": "rate(http_requests_total[5m])", "legendFormat": "{{method}} {{path}}" }],
+      "gridPos": { "x": 0, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "id": 2,
+      "title": "API Response Time (p95)",
+      "type": "graph",
+      "targets": [{ "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))", "legendFormat": "p95" }],
+      "gridPos": { "x": 12, "y": 0, "w": 12, "h": 8 }
+    },
+    {
+      "id": 3,
+      "title": "AI Model Prediction Latency",
+      "type": "stat",
+      "targets": [{ "expr": "avg(ai_prediction_duration_seconds)", "legendFormat": "Avg Latency" }],
+      "gridPos": { "x": 0, "y": 8, "w": 6, "h": 4 }
+    },
+    {
+      "id": 4,
+      "title": "Fraud Alerts (Open)",
+      "type": "stat",
+      "targets": [{ "expr": "fraud_alerts_open_total", "legendFormat": "Open Alerts" }],
+      "gridPos": { "x": 6, "y": 8, "w": 6, "h": 4 }
+    }
+  ],
+  "time": { "from": "now-1h", "to": "now" },
+  "refresh": "30s"
+}

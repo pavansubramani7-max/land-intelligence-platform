@@ -1,0 +1,40 @@
+{
+  "metrics": {
+    "mae": 36630769.85768233,
+    "rmse": 82259411.47532639,
+    "r2": 0.9653516948559481,
+    "cv_r2_mean": 0.9711185572621076,
+    "cv_r2_std": 0.007669507136744345
+  },
+  "features": [
+    "area_sqft",
+    "location_score",
+    "road_proximity_km",
+    "infrastructure_score",
+    "year_established",
+    "market_price",
+    "ownership_changes",
+    "litigation_count",
+    "price_per_sqft",
+    "property_age",
+    "combined_score",
+    "log_area",
+    "flood_penalty",
+    "zone_type_agricultural",
+    "zone_type_commercial",
+    "zone_type_industrial",
+    "zone_type_residential",
+    "soil_type_alluvial",
+    "soil_type_black cotton",
+    "soil_type_clay",
+    "soil_type_loam",
+    "soil_type_red laterite",
+    "soil_type_rocky",
+    "soil_type_sandy",
+    "soil_type_sandy loam"
+  ],
+  "name": "valuation_rf",
+  "version": "20260414_152944",
+  "filename": "valuation_rf_v20260414_152944.joblib",
+  "saved_at": "20260414_152944"
+}

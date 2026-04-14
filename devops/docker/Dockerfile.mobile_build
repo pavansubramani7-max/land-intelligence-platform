@@ -1,0 +1,8 @@
+FROM node:20-alpine
+WORKDIR /app
+RUN npm install -g expo-cli eas-cli
+COPY package*.json ./
+RUN npm ci
+COPY . .
+# For CI builds: eas build --platform android --non-interactive
+CMD ["expo", "start", "--no-dev", "--minify"]

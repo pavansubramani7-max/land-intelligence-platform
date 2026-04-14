@@ -1,0 +1,57 @@
+{
+  "title": "Land Intelligence Platform",
+  "uid": "land-intelligence",
+  "version": 1,
+  "panels": [
+    {
+      "id": 1,
+      "title": "API Request Rate",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 0, "y": 0},
+      "targets": [
+        {
+          "expr": "rate(http_requests_total[5m])",
+          "legendFormat": "{{method}} {{path}}"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "API Response Time (p95)",
+      "type": "graph",
+      "gridPos": {"h": 8, "w": 12, "x": 12, "y": 0},
+      "targets": [
+        {
+          "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+          "legendFormat": "p95 latency"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Error Rate",
+      "type": "singlestat",
+      "gridPos": {"h": 4, "w": 6, "x": 0, "y": 8},
+      "targets": [
+        {
+          "expr": "rate(http_requests_total{status=~'5..'}[5m])",
+          "legendFormat": "5xx errors"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Active Connections",
+      "type": "singlestat",
+      "gridPos": {"h": 4, "w": 6, "x": 6, "y": 8},
+      "targets": [
+        {
+          "expr": "process_open_fds",
+          "legendFormat": "open fds"
+        }
+      ]
+    }
+  ],
+  "time": {"from": "now-1h", "to": "now"},
+  "refresh": "30s"
+}

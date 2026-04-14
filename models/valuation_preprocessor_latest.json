@@ -1,0 +1,23 @@
+{
+  "features": [
+    "area_sqft",
+    "location_score",
+    "road_proximity_km",
+    "infrastructure_score",
+    "year_established",
+    "market_price",
+    "ownership_changes",
+    "litigation_count",
+    "price_per_sqft",
+    "property_age",
+    "combined_score",
+    "log_area",
+    "flood_penalty",
+    "zone_type",
+    "soil_type"
+  ],
+  "name": "valuation_preprocessor",
+  "version": "20260414_152944",
+  "filename": "valuation_preprocessor_v20260414_152944.joblib",
+  "saved_at": "20260414_152944"
+}

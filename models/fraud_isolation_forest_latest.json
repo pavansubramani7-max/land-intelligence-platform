@@ -1,0 +1,13 @@
+{
+  "features": [
+    "price_change_pct",
+    "days_between_transfers",
+    "ownership_count_90days",
+    "price_vs_market_ratio"
+  ],
+  "contamination": 0.05,
+  "name": "fraud_isolation_forest",
+  "version": "20260414_142511",
+  "filename": "fraud_isolation_forest_v20260414_142511.joblib",
+  "saved_at": "20260414_142511"
+}

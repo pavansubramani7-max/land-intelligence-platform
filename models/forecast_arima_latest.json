@@ -1,0 +1,13 @@
+{
+  "base_price": 84295163.515,
+  "order": [
+    2,
+    1,
+    2
+  ],
+  "n_training_periods": 60,
+  "name": "forecast_arima",
+  "version": "20260414_142512",
+  "filename": "forecast_arima_v20260414_142512.joblib",
+  "saved_at": "20260414_142512"
+}

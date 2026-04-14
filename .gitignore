@@ -1,0 +1,63 @@
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React build
+frontend/build/
+frontend/.next/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+*.egg
+
+# ML Models (large files — use DVC or S3)
+ai_engine/data/model_registry/*.joblib
+ai_engine/data/model_registry/*.h5
+ai_engine/data/model_registry/*.keras
+ai_engine/data/model_registry/*.pkl
+
+# Docker
+.dockerignore
+
+# Uploads
+backend/uploads/
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Test coverage
+coverage/
+.coverage
+htmlcov/
+
+# Terraform state
+devops/terraform/*.tfstate
+devops/terraform/*.tfstate.backup
+devops/terraform/.terraform/

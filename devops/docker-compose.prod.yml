@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  frontend:
+    command: npm run build && npx serve -s build -l 3000
+    environment:
+      REACT_APP_API_URL: ${PROD_API_URL}
+    volumes: []
+
+  backend:
+    command: npm start
+    environment:
+      NODE_ENV: production
+      MONGODB_URI: ${PROD_MONGODB_URI}
+      JWT_SECRET: ${JWT_SECRET}
+      REDIS_URL: ${PROD_REDIS_URL}
+    volumes: []
+
+  ai_engine:
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --workers 2
+    volumes: []
+
+  nginx:
+    ports:
+      - "443:443"
+      - "80:80"
